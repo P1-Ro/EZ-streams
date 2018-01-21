@@ -1,0 +1,8 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.p1ro.ez_streams
+extraResources:
+  from: app
+  to: app
+electronVersion: 1.7.10
