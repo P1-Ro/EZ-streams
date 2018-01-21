@@ -1,35 +1,43 @@
 {
-  "name": "electron-quick-start",
+  "name": "EZ-streams",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "Watch series and movies with ease",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "pack": "electron-builder",
+    "release": "build -p always"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/P1-Ro/EZ-streams",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "electron",
+    "flask",
+    "selenium-webdriver",
+    "pyinstaller",
+    "cache"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Jozef Dochan",
+  "license": "MIT",
   "devDependencies": {
     "electron": "~1.7.8",
     "electron-builder": "^19.54.0"
   },
   "dependencies": {
+    "electron-updater": "^2.19.1",
     "request-promise": "^4.2.2"
   },
   "build": {
-    "appId": "com.p1ro.ez_streams",
+    "appId": "com.github.p1-ro.EZ-streams",
     "extraResources": {
-      "from":"app",
-      "to":"app"
-    }
+      "from": "./backend/dist/app/",
+      "to": "app"
+    },
+    "directories": {
+      "buildResources": "buildResources"
+    },
+      "publish": {
+        "provider" : "github",
+        "vPrefixedTagName": true
+      }
   }
 }

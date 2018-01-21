@@ -1,4 +1,5 @@
 const electron = require('electron');
+const {autoUpdater} = require("electron-updater");
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const fs = require('fs');
@@ -9,10 +10,13 @@ let mainWindow;
 
 function createWindow() {
 
+    autoUpdater.checkForUpdatesAndNotify();
     let process_name = "app.exe";
-    let cwd = {cwd: "app"};
+    let DEBUG = true;
+    let cwd = {cwd: "backend/dist/app"};
     if (fs.existsSync("resources/app")) {
         cwd = {cwd: "resources/app/"};
+        DEBUG = false;
     }
 
 
@@ -27,7 +31,9 @@ function createWindow() {
             }
         });
         mainWindow.loadURL(mainAddr);
-        mainWindow.webContents.openDevTools();
+        if(DEBUG){
+            mainWindow.webContents.openDevTools();
+        }
         mainWindow.on('closed', function () {
             mainWindow = null;
             subpy.kill('SIGINT');
