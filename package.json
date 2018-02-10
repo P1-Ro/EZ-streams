@@ -19,7 +19,7 @@
   "author": "Jozef Dochan",
   "license": "MIT",
   "devDependencies": {
-    "electron": "~1.7.8",
+    "electron": "~1.7.11",
     "electron-builder": "^19.54.0"
   },
   "dependencies": {
@@ -35,9 +35,9 @@
     "directories": {
       "buildResources": "buildResources"
     },
-      "publish": {
-        "provider" : "github",
-        "vPrefixedTagName": true
-      }
+    "publish": {
+      "provider": "github",
+      "vPrefixedTagName": true
+    }
   }
 }
