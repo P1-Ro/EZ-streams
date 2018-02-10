@@ -2,10 +2,8 @@ node_modules/
 dist/
 
 \.idea/
-/package-lock.json
 /access_token.txt
 /yarn.lock
 yarn-error.log
 
-
-*.db
+/release.bat
