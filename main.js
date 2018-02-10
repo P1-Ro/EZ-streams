@@ -33,7 +33,9 @@ function createWindow() {
 
     let openWindow = function () {
         mainWindow = new BrowserWindow({
-            width: 800, height: 600, webPreferences: {
+            width: 0,
+            height: 0,
+            webPreferences: {
                 nodeIntegration: false
             }
         });
