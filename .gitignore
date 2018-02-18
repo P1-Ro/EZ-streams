@@ -7,3 +7,4 @@ dist/
 yarn-error.log
 
 /release.bat
+dev-app-update.yml
