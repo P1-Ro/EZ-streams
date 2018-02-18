@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <title>About This App</title>
+    <link rel="stylesheet" href="../styles/about.css">
+</head>
+<body>
+<div class="logo">
+    <img id="app-icon" alt="App icon" height="200">
+</div>
+<h2 class="title">Ez streams</h2>
+<h3 class="description">Watch series and movies with ease</h3>
+<div class="copyright">2018 &copy; P1Ro</div>
+<div class="versions" id="version">Version:</div>
+<!--<div class="update">-->
+<!--<a href="#" onclick="reportBug()" class="link">Report bug</a>-->
+<!--</div>-->
+
+
+<!-- https://github.com/electron/electron/issues/2863 -->
+<script>
+    const fs = require("fs");
+    const path = require("path");
+    var exports = exports || {};
+    let ver = document.getElementById("version");
+    let appVersion = require('electron').remote.app.getVersion();
+    ver.innerHTML += appVersion;
+
+    let cwd = "../backend/dist/app/";
+    if (fs.existsSync("resources/app")){
+        cwd = "resources/app/";
+    }
+    let icon = document.getElementById("app-icon");
+    icon.setAttribute("src", path.join(cwd, "icon.png"))
+
+</script>
+
+</body>
+</html>
