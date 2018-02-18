@@ -1,14 +1,23 @@
 const { Menu, app, BrowserWindow} = require('electron');
 const {autoUpdater} = require("electron-updater");
 const fs = require('fs');
+const path = require("path");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let flagStore = {};
 
+function clearCache(){
+    if(fs.existsSync(flagStore.cwd + "cache.db")){
+        fs.unlinkSync(flagStore.cwd + "cache.db");
+    }
+    mainWindow.webContents.session.clearStorageData();
+    mainWindow.webContents.reload();
+}
+
 autoUpdater.on('update-downloaded', () => {
-    fs.unlinkSync(flagStore.cwd + "cache.db");
+    clearCache()
 });
 
 function setCWD() {
@@ -22,7 +31,11 @@ function setCWD() {
 
 function createWindow() {
 
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdates();
+
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
     let process_name = "app.exe";
     setCWD();
 
@@ -32,9 +45,12 @@ function createWindow() {
     let mainAddr = 'http://localhost:8080';
 
     let openWindow = function () {
+        console.log(path.join(flagStore.cwd, "icon.png"));
         mainWindow = new BrowserWindow({
-            width: 0,
-            height: 0,
+            width: 1000,
+            height: 600,
+            backgroundColor: '#222',
+            icon: path.join(flagStore.cwd, "icon.png"),
             webPreferences: {
                 nodeIntegration: false
             }
@@ -76,11 +92,7 @@ const template = [
             {
                 label: "Clear cache",
                 click() {
-                    if(fs.existsSync(flagStore.cwd + "cache.db")){
-                        fs.unlinkSync(flagStore.cwd + "cache.db");
-                    }
-                        mainWindow.webContents.session.clearStorageData();
-                        mainWindow.webContents.reload();
+                    clearCache();
                 }
             },
         ]
@@ -102,13 +114,41 @@ const template = [
             },
             {
                 label: "About",
+                click() {
+                    const index_html = 'file://' + path.join(__dirname, 'dialogs', 'about.html');
+                    let window = new BrowserWindow({
+                        width: 400,
+                        height: 400,
+                        minimizable: false,
+                        maximizable: false,
+                        icon: path.join(flagStore.cwd, "icon.png"),
+                        backgroundColor: '#222',
+                        center: true
+                    });
+                    window.setMenu(null);
+                    if(flagStore.DEBUG){
+                        window.webContents.openDevTools({mode: "detach"});
+                    }
+                    window.loadURL(index_html);
+                }
             },
         ]
     },
 ];
 
-const menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);
+let shouldQuit = app.makeSingleInstance(function() {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+    }
+});
+
+if (shouldQuit) {
+    app.quit();
+    return;
+}
+
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
