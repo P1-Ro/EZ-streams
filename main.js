@@ -1,4 +1,4 @@
-const { Menu, app, BrowserWindow} = require('electron');
+const { Menu, app, BrowserWindow, ipcMain, shell } = require('electron');
 const {autoUpdater} = require("electron-updater");
 const fs = require('fs');
 const path = require("path");
@@ -7,6 +7,11 @@ const path = require("path");
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let flagStore = {};
+
+ipcMain .on("show-menu", () => {
+    let menu = Menu.buildFromTemplate(template);
+    menu.popup(mainWindow);
+});
 
 function clearCache(){
     if(fs.existsSync(flagStore.cwd + "cache.db")){
@@ -33,9 +38,6 @@ function createWindow() {
 
     autoUpdater.checkForUpdates();
 
-
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
     let process_name = "app.exe";
     setCWD();
 
@@ -60,14 +62,19 @@ function createWindow() {
         if (flagStore.DEBUG) {
             mainWindow.webContents.openDevTools();
         }
-        mainWindow.webContents.on('new-window', function (event) {
+        mainWindow.webContents.on('new-window', function (event, url) {
 
             event.preventDefault();
+            shell.openExternal(url);
         });
         mainWindow.on('closed', function () {
             mainWindow = null;
             subpy.kill('SIGINT');
         });
+
+        let menu = Menu.buildFromTemplate(template);
+        Menu.setApplicationMenu(menu);
+
     };
 
     let startUp = function () {
