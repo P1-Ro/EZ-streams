@@ -1,0 +1,91 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="resources/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .menu {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+        }
+
+        iframe {
+            border: none;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        iframe[src="http://localhost:8080/settings/"] {
+            width: 90vw;
+            margin-left: 10vw;
+        }
+
+        #search {
+            position: absolute;
+            margin-left: 2rem;
+            bottom: 0.4rem;
+        }
+
+        .hide{
+            display: none !important;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+<div class="menu">
+    <div class="list-menu">
+        <a class="list-group-item" href="index.html"><i class="fas fa-home"></i></a>
+        <a class="list-group-item" href="#" onclick="toggleSearch()">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search" class="hide" placeholder="Search..." onclick="stopEvents()" onblur="toggleSearch()"></a>
+        <a class="list-group-item" href="index.html"><i class="fas fa-heart"></i></a>
+        <a class="list-group-item" href="#" onclick="toggleMenu()"><i class="fas fa-cogs"></i></a>
+    </div>
+</div>
+<iframe src="http://localhost:8080" id="frame"></iframe>
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+<script>
+    const ipc = require('electron').ipcRenderer;
+    window.$ = window.jQuery = require("jquery");
+    let frame = document.getElementById("frame");
+    const baseUrl = "http://localhost:8080/";
+
+    ipc.on("open-settings", function () {
+        frame.src = baseUrl+"settings/"
+    });
+
+    function toggleMenu() {
+        ipc.send("show-menu");
+    }
+
+    const search = $("#search");
+
+    function toggleSearch() {
+        let hidden = search[0].classList.contains("hide") || search[0].classList.contains("slideOutLeft");
+        if(hidden){
+            search.removeClass("hide animated slideOutLeft");
+            search.addClass("animated slideInLeft");
+            search.focus();
+        } else {
+            search.removeClass("animated slideInLeft");
+            search.addClass("animated slideOutLeft");
+        }
+    }
+
+    //SEARCH
+    search.on("keypress", function (evt) {
+        if (evt.keyCode === 13) {
+            frame.src = baseUrl + "/search/" + search.val();
+            search.val("");
+            search.blur();
+        }
+    });
+</script>
+</html>
