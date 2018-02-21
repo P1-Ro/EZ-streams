@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="logo">
-    <img id="app-icon" alt="App icon" height="200">
+    <img id="app-icon" alt="App icon" height="200" src="">
 </div>
 <h2 class="title">Ez streams</h2>
 <h3 class="description">Watch series and movies with ease</h3>
@@ -23,10 +23,11 @@
 <script>
     const fs = require("fs");
     const path = require("path");
-    var exports = exports || {};
     let ver = document.getElementById("version");
     let appVersion = require('electron').remote.app.getVersion();
     ver.innerHTML += appVersion;
+
+
 
     let cwd = "../backend/dist/app/";
     if (fs.existsSync("resources/app")){

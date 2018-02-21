@@ -4,18 +4,17 @@ html {
     height: 100%;
     -webkit-user-select: none;
     user-select: none;
-    -webkit-app-region: drag;
 }
 
 body {
     margin: 0;
-    display: flex
+    display: flex;
     flex-direction: column;;
     justify-content: center;
     align-items: center;
     color: #bcbcbc;
     font-size: 12px;
-    font-family: 'Helvetica', 'Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+    font-family: 'Helvetica', 'Arial', sans-serif;
 }
 
 .logo {
@@ -57,11 +56,4 @@ body {
 .link {
     cursor: pointer;
     color: #80a0c2;
-}
-
-.bug-report-link {
-    -webkit-app-region: no-drag;
-    position: absolute;
-    right: 0.5em;
-    bottom: 0.5em;
 }
