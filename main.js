@@ -26,7 +26,7 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 function setCWD() {
-    flagStore = {cwd: "backend/dist/app/"};
+    flagStore = {cwd: "backend"};
     flagStore.DEBUG = true;
     if (fs.existsSync("resources/app")) {
         flagStore = {cwd: "resources/app/"};
@@ -40,7 +40,6 @@ function createWindow() {
 
     let process_name = "app.exe";
     setCWD();
-
 
     let subpy = require('child_process').spawn(process_name, flagStore);
     let rq = require('request-promise');
