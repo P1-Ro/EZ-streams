@@ -1,6 +1,6 @@
 {
   "name": "EZ-streams",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Watch series and movies with ease",
   "main": "main.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "build": {
     "appId": "com.github.p1-ro.EZ-streams",
     "extraResources": {
-      "from": "./backend/dist/app/",
+      "from": "./app/",
       "to": "app"
     },
     "directories": {
