@@ -40,10 +40,13 @@ function createWindow() {
 
     let process_name = "app.exe";
     setCWD();
+    let subpy;
+    if (!flagStore.DEBUG) {
+        subpy = require('child_process').spawn(process_name, flagStore);
+    }
 
-    let subpy = require('child_process').spawn(process_name, flagStore);
     let rq = require('request-promise');
-    let mainAddr = 'http://localhost:8080';
+    let mainAddr = 'http://localhost:26034';
 
     let openWindow = function () {
         console.log(path.join(flagStore.cwd, "icon.png"));
@@ -67,7 +70,7 @@ function createWindow() {
         });
         mainWindow.on('closed', function () {
             mainWindow = null;
-            subpy.kill('SIGINT');
+            subpy ? subpy.kill('SIGINT') : false;
         });
 
         Menu.setApplicationMenu(null);

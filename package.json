@@ -1,18 +1,17 @@
 {
   "name": "EZ-streams",
-  "version": "1.5.0",
+  "version": "1.7.0",
   "description": "Watch series and movies with ease",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-builder",
+    "pack": "electron-builder --linux",
     "release": "build -p always"
   },
   "repository": "https://github.com/P1-Ro/EZ-streams",
   "keywords": [
     "electron",
     "flask",
-    "selenium-webdriver",
     "pyinstaller",
     "cache"
   ],
@@ -20,7 +19,9 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "~1.7.11",
-    "electron-builder": "^19.54.0"
+    "electron-builder": "^19.54.0",
+    "gulp": "^3.9.1",
+    "gulp-run-command": "0.0.9"
   },
   "dependencies": {
     "electron-updater": "^2.19.1",
