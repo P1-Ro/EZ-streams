@@ -54,7 +54,7 @@ function createWindow() {
             width: 1000,
             height: 600,
             minHeight: 600,
-            minWidth:800,
+            minWidth:900,
             backgroundColor: '#222',
             icon: path.join(flagStore.cwd, "icon.png")
         });
