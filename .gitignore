@@ -8,5 +8,4 @@ yarn-error.log
 
 /release.bat
 dev-app-update.yml
-backend/
 Pipfile
